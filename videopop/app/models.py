@@ -1,14 +1,17 @@
 from django.db import models
 from django.template.defaultfilters import slugify
-from django.comtrib.auth.models import User
+from django.contrib.auth.models import User
 import ast
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     score = models.IntegerField(max_length = 128)
-	    def __unicode__(self):
-        return self.user.name
-
+    def __unicode__(self):
+           return self.user.name
+        
+class Video(models.Model):
+	url = models.URLField()
+	correctAnswer = models.CharField(max_length = 128)
 		
 class Game(models.Model):
 	game_mode = models.CharField(max_length=128)
@@ -26,15 +29,9 @@ class Score(models.Model):
 	
 	def __unicode__(self):
 		return str(self.score)
-		
-
-class Video(models.model):
-	url = models.URLField()
-	correctAnswer = models.CharField(max_length = 128)
-	
-
+			
 class ListField(models.TextField):                 #stolen from 												
-    __metaclass__ = models.SubfieldBase				#http://stackoverflow.com/questions/22340258/django-list-field-in-model
+    __metaclass__ = models.SubfieldBase		   #http://stackoverflow.com/questions/22340258/django-list-field-in-model
     description = "Stores a python list"
 
     def __init__(self, *args, **kwargs):
@@ -60,7 +57,7 @@ class ListField(models.TextField):                 #stolen from
         return self.get_db_prep_value(value)
 
 	
-class RankingTable(models.model):
+class RankingTable(models.Model):
 	best_scores = ListField()
 	
 	
