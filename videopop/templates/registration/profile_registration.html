@@ -1,0 +1,23 @@
+{% extends "app/base.html" %}
+
+{% block body_block %}
+
+	<div class="page-header">
+	<h1>Edit profile information</h1>
+	</div>
+		{% if registered %}
+			<strong>Your profile has been updated successfully!</strong>
+			<a href="/">Return to the homepage.</a><br />
+		{% else %}
+			<form id="user_form" method="post" action="/rango/add_profile/"
+			enctype="multipart/form-data">
+			
+			{% csrf_token %}
+			
+			{{ profile_form.as_p }}
+			
+			<input type="submit" name="submit" value="Update" />
+			</form>
+		{% endif %}
+		
+{% endblock %}

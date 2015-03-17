@@ -32,11 +32,19 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="/">VideoPop</a>
+		  <a class="navbar-brand" href="/scores">Highscores</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-
+			{% if user.is_authenticated %}
+				<li class="navbar-text">Welcome, {{ user.username }}!</li>
+				<li><a href="{% url 'profile' user.username %}">Profile</a></li>
+				<li><a href="{% url 'auth_logout' %}?next=/">Logout</a></li>
 								
+			{% else %}
+				<li><a href="{% url 'registration_register' %}">Register Here</a></li>
+				<li><a href="{% url 'auth_login' %}">Login</a></li>
+			{% endif %}
 
               </ul>
         </div>

@@ -5,6 +5,7 @@ import ast
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
+    
     score = models.IntegerField(max_length = 128)
     def __unicode__(self):
            return self.user.name

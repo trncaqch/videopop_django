@@ -1,0 +1,15 @@
+{% extends "app/base.html" %}
+	{% load staticfiles %}
+	
+		{% block body_block %}
+		{% if username %}	
+			<div class="page-header">
+				<h1>{{username.username}}'s profile</h1>
+				</div>
+				<br>				
+				<strong> E-mail: {{username.email}} <strong/>
+				</p>
+		{% else %}
+			<strong> User does not exist! <strong/>
+		{% endif %}
+		{% endblock %}
