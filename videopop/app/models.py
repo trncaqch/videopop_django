@@ -12,8 +12,9 @@ class UserProfile(models.Model):
         
 class Video(models.Model):
         name = models.CharField(max_length = 128)
-	url = models.URLField()
+	url = models.URLField(unique = True)
 	correctAnswer = models.CharField(max_length = 128)
+	videoid = models.CharField(max_length = 128)
 		
 class Game(models.Model):
 	game_mode = models.CharField(max_length=128)

@@ -15,17 +15,17 @@ def populate():
     
 
     for url in videoList:
-        name = getVideoName(url.split("=")[1])
-        add_video(name, url)
-
-    for v in Video.objects.all():
-        print v
+        videoid = url.split("=")[1]
+        name = getVideoName(videoid)
+        add_video(name, url, videoid)
+        print url
 
         
     
-def add_video(name, url):
+def add_video(name, url, videoid):
     v = Video.objects.get_or_create(name = name)[0]
     v.url = url
+    v.videoid = videoid
     v.correctAnswer = name
     v.save()
     return v

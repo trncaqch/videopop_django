@@ -1,0 +1,29 @@
+{% extends "app/base.html" %}
+
+{% load staticfiles %}
+
+<script type="text/javascript">
+  function getVal(value)
+  {
+   alert(value);
+  }
+ </script>
+
+<script src="jquery.js"></script>
+<script src="mediaelement-and-player.min.js"></script>
+	
+		{% block body_block %}
+		{% if source %}
+				<iframe width="560" height="315" 
+				src= {{ source }}
+				frameborder="0"></iframe>
+				<br>
+		{% endif %}
+			{% for video in videos %}
+				<button id="video.videoid" value="video.name" onclick="getVal(this.value)">{{video.name}}</button>
+				<br>
+			{% endfor %}
+		<strong>{{ answer }}</strong>
+		<br>
+		<p id="demo"></p>
+		{% endblock %}

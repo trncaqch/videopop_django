@@ -1,29 +1,57 @@
 {% extends 'app/base.html' %}
-
 {% load staticfiles %}
 
+{% block title %}Leaderboard{% endblock %}
+    
 {% block body_block %}
-<div class="row-fluid">
-	{% if scores %}
-		<table class="reference" style="width:100%">
-		<tr id="tr_id_0" class="tr-class-1">
-			<th>Rank</th>
-			<th>User</th>
-			<th>Score</th>
-		</tr>
-		{% for score in scores %}
-			<tr id="tr_id_1" class="tr-class-1">
-				<td id="td_id_2" class="td-class-2"></td>
-				<td>{{ score.user }}</td>
-				<td>{{ score.score }}</td>
-			</tr>
+
+<style>
+table{
+    counter-reset: rowNumber;
+}
+
+#rank{
+    counter-increment: rowNumber;
+}
+
+table tr td:first-child::before {
+    content: counter(rowNumber);
+    min-width: 1em;
+    margin-right: 0.5em;
+	}
+
+</style>
+
+<div class="container">
+	<div class="row" style="height: 25px">
+	</div>
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="row">
+				<div class="col-xs-6 col-xs-offset-3">
+					<table class="table">
+						<th style="text-align: center">Rankings</th>
+					</table>
+				</div>
+			</div>
+			<table class="table">
+				
+				<th>Position</th>
+				<th>Name</th>
+				<th>Points</th>
+				{% for score in scores %}
+					<tr id="rank">
+					<td></td>
+					<td>{{ score.user}}</td>
+					<td>{{score.score}}</td>
+					</tr>
+				{% endfor %}
+				
 			</table>
-		{% endfor %}
-	{% else %}
-	<strong> This is the highscore page </strong>
-	{% endif %}
-    </div>
-    <!--/span-->
+			
+		</div>
+	</div>
 </div>
-<!--/row-->
+
+
 {% endblock %}
