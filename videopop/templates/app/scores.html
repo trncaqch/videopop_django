@@ -3,7 +3,27 @@
 {% load staticfiles %}
 
 {% block body_block %}
-
-        <h1>This is highscores page</h1>
-
+<div class="row-fluid">
+	{% if scores %}
+		<table class="reference" style="width:100%">
+		<tr id="tr_id_0" class="tr-class-1">
+			<th>Rank</th>
+			<th>User</th>
+			<th>Score</th>
+		</tr>
+		{% for score in scores %}
+			<tr id="tr_id_1" class="tr-class-1">
+				<td id="td_id_2" class="td-class-2"></td>
+				<td>{{ score.user }}</td>
+				<td>{{ score.score }}</td>
+			</tr>
+			</table>
+		{% endfor %}
+	{% else %}
+	<strong> This is the highscore page </strong>
+	{% endif %}
+    </div>
+    <!--/span-->
+</div>
+<!--/row-->
 {% endblock %}
