@@ -11,12 +11,13 @@ class UserProfile(models.Model):
            return self.user.name
         
 class Video(models.Model):
+        name = models.CharField(max_length = 128)
 	url = models.URLField()
 	correctAnswer = models.CharField(max_length = 128)
 		
 class Game(models.Model):
 	game_mode = models.CharField(max_length=128)
-	created_at = models.DateTimeField(auto_now_add=True)
+	date = models.DateTimeField(auto_now_add=True)
 	url = models.ForeignKey(Video)
 	
 	def __unicode__(self):
@@ -24,7 +25,6 @@ class Game(models.Model):
 	
 class Score(models.Model):
 	user = models.ForeignKey(User)
-	game = models.ForeignKey(Game)
 	score = models.IntegerField(default=0)
 	
 	

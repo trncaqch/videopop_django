@@ -1,4 +1,12 @@
 from django.contrib import admin
-from app.models import Video
+from app.models import Video, Score
 
-admin.site.register(Video)
+class VideoAdmin(admin.ModelAdmin):
+    list_display = ['name']
+
+class ScoreAdmin(admin.ModelAdmin):
+    list_display = ['user','score']
+    
+
+admin.site.register(Video, VideoAdmin)
+admin.site.register(Score, ScoreAdmin)

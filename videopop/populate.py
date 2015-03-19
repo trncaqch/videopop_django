@@ -4,26 +4,34 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'videopop.settings')
 import django
 django.setup()
 
-import youParse
+from youName import getVideoName
+from youParse import crawl
 from app.models import Video
 
 def populate():
-    videosList = youParse.crawl(
-        "www.youtube.com/watch?v=OPf0YbXqDm0&list=PL7C00E83736FB02C3")
+    print "inside populate"
+    videoList = crawl(
+        "https://www.youtube.com/watch?v=CevxZvSJLk8&list=PLWRJVI4Oj4IaYIWIpFlnRJ_v_fIaIl6Ey")
     
-    for s in videoList:
-        print s
-        add_video(s)
+
+    for url in videoList:
+        name = getVideoName(url.split("=")[1])
+        add_video(name, url)
 
     for v in Video.objects.all():
         print v
+
+        
     
-    
-def add_video(url):
-    v = Video.objects.get_or_create(url = url)[0]
+def add_video(name, url):
+    v = Video.objects.get_or_create(name = name)[0]
+    v.url = url
+    v.correctAnswer = name
+    v.save()
     return v
 
 # Start execution here!
 if __name__ == '__main__':
-    print "Starting Rango population script..."
-    populate()    
+    print "Starting VideoPop population script..."
+    populate()
+

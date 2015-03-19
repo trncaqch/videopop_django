@@ -17,6 +17,9 @@ import sys
 import time
  
 def crawl(url):
+    if 'http' not in url:
+        url = 'http://' + url
+        
     sTUBE = ''
     cPL = ''
     amp = 0
@@ -54,18 +57,9 @@ def crawl(url):
 #            sys.stdout.write(all_url[i] + '\n')
 #            time.sleep(0.04)
 #            i = i + 1
-        print all_url
+        return all_url
+           
         
     else:
         print('No videos found.')
         exit(1)
-         
-if len(sys.argv) < 2 or len(sys.argv) > 2:
-    print('USAGE: python3 youParse.py YOUTUBEurl')
-    exit(1)
-     
-else:
-    url = sys.argv[1]
-    if 'http' not in url:
-        url = 'http://' + url
-    crawl(url)
