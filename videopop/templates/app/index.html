@@ -3,10 +3,36 @@
 {% load staticfiles %}
 
 {% block body_block %}
-
-        <h1>This is index page</h1>
-		<br/>
-        <h2><a href="/play"><strong>Play</strong></a></h2>
-		<br/>
-
+		
+		<head>
+		<style>
+		
+		h1 {
+			font: italic bold 50px/50px Georgia, serif;
+			color: white;
+			
+			}
+		h2 {
+			display: block;
+			margin-left: 30%;
+			margin-right: 30%;
+			}
+		
+		
+		
+		</style>
+		</head>
+		
+        <h1>
+		<div class = "section">
+		Welcome to this very innovative and interactive game, called Videopop
+		</div>
+		</h1>
+		<h2>
+		<div class = "images" id = "playbutton">
+		<a href= "/play">
+		<img src = "{% static "images/logo.png" %} "alt = " logo"/>
+		</a>
+		</div>
+		</h2>
 {% endblock %}
