@@ -5,7 +5,7 @@ class VideoAdmin(admin.ModelAdmin):
     list_display = ['name']
 
 class ScoreAdmin(admin.ModelAdmin):
-    list_display = ['user','score']
+    list_display = ['user','score','date']
     
 
 admin.site.register(Video, VideoAdmin)

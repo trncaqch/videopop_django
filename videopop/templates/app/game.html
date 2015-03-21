@@ -1,29 +1,57 @@
 {% extends "app/base.html" %}
 
 {% load staticfiles %}
-
-<script type="text/javascript">
-  function getVal(value)
-  {
-   alert(value);
-  }
- </script>
-
-<script src="jquery.js"></script>
-<script src="mediaelement-and-player.min.js"></script>
 	
-		{% block body_block %}
+{% block body_block %}
+
 		{% if source %}
-				<iframe width="560" height="315" 
-				src= {{ source }}
-				frameborder="0"></iframe>
-				<br>
+		<table>
+		<tr>
+		<td>
+			<iframe width="560" height="315"
+			src= {{ source }}
+			frameborder="0"></iframe>
+		</td>
+		<td></td>
+		<td>
+			<div id="time"></div>
+		</td>
+		</tr>
+		</table>
+			<br>
 		{% endif %}
-			{% for video in videos %}
-				<button id="video.videoid" value="video.name" onclick="getVal(this.value)">{{video.name}}</button>
-				<br>
-			{% endfor %}
-		<strong>{{ answer }}</strong>
+		
 		<br>
-		<p id="demo"></p>
-		{% endblock %}
+		{% for video in videos %}
+			<form method = 'post' action = {% url 'play' %}>
+				{% csrf_token %}
+				<button class="btn btn-primary" method = 'post' type="submit" name="submit" id="{{video.videoid}}" value="{{video.name}}">
+					{{video.name}}</button>				
+			<br>
+			<br>
+		{% endfor %}
+
+		<strong>{{ answers }}</strong>
+		<br>
+		<br>
+			
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>	
+$(window).ready( function() {
+    var time = 5
+	var refresh = 0
+	$('#time').html(time);
+    setInterval( function() {
+        time--;
+        $('#time').html(time);
+        if (time === 0) {
+            window.location.href= '/vidpop/play';
+			refresh++;	
+        } 
+    }, 1000 );
+});
+</script>
+{% endblock %}
+
+		

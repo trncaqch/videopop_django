@@ -59,7 +59,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect('/vidpop/')
             else:
 
                 return HttpResponse("Your account is disabled.")
@@ -73,7 +73,7 @@ def user_login(request):
     else:
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
-        return render(request, '/login.html', {})
+        return render(request, 'app/login.html', {})
 
 
 
@@ -81,4 +81,4 @@ def user_login(request):
 def user_logout(request):
 
     logout(request)
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect('/vidpop/')
