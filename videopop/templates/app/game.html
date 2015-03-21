@@ -8,6 +8,9 @@
 		<table>
 		<tr>
 		<td>
+			<div id="gameTimer">test</div>
+		</td>
+		<td>
 			<iframe width="560" height="315"
 			src= {{ source }}
 			frameborder="0"></iframe>
@@ -40,15 +43,21 @@
 <script>	
 $(window).ready( function() {
     var time = 5
-	var refresh = 0
+	var gameTime = {{ timeleft }}
+	
 	$('#time').html(time);
+	$('#gameTimer').html(gameTime);
     setInterval( function() {
         time--;
+		gameTime--
         $('#time').html(time);
+		$('#gameTimer').html(gameTime);
         if (time === 0) {
             window.location.href= '/vidpop/play';
-			refresh++;	
         } 
+		if (gameTime <= 0) {
+			window.location.href= '/vidpop/play';
+		}
     }, 1000 );
 });
 </script>
