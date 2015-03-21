@@ -46,7 +46,8 @@ def play(request):
 
     if refreshes == 5:
         if request.user.is_authenticated():
-            add_score(request.user, correctAnswers * randint(5, 10), correctAnswers, refreshes)
+            add_score(request.user, correctAnswers * randint(5, 15), correctAnswers, refreshes)
+
         refreshes = -1
         correctAnswers = 0
         return HttpResponseRedirect('/vidpop/results')

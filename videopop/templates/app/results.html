@@ -4,6 +4,15 @@
 	
 {% block body_block %}
 	
-
-
+	{% if result %}
+		<strong> Congratulations!</strong>
+		<strong> You scored {{ result.score}} points </strong>
+		<br>
+		<strong> You guessed {{ result.correctAnswers }} videos correctly </strong>
+		<br>
+		<strong> You saw {{ result.videosSeen }} music videos </strong>
+	{% else %}
+		<strong> No result </strong>
+	{% endif %}
+	
 {% endblock %}

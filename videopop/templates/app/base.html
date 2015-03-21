@@ -57,7 +57,7 @@
 			{% if user.is_authenticated %}
 				<li class="navbar-text">Welcome, {{ user.username }}!</li>
 				<li><a href="{% url 'profile' user.username %}">Profile</a></li>
-				<li><a href="{% url 'auth_logout' %}?next=/">Logout</a></li>
+				<li><a href="{% url 'auth_logout' %}?next=/vidpop/">Logout</a></li>
 								
 			{% else %}
 				<li><a href="{% url 'registration_register' %}">Register Here</a></li>
