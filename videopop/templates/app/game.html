@@ -3,6 +3,25 @@
 {% load staticfiles %}
 	
 {% block body_block %}
+<style>
+#shownav {
+    height: 20px;
+}
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    opacity: 1;
+    -webkit-transition: opacity 0.5s ease-in-out;
+    -moz-transition: opacity 0.5s ease-in-out;
+    -ms-transition: opacity 0.5s ease-in-out;
+    -o-transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out;
+}
+.navbar.hideme {
+    opacity: 0;
+}
+</style>
 
 		{% if source %}
 		<table>
@@ -58,7 +77,45 @@ $(window).ready( function() {
 		if (gameTime <= 0) {
 			window.location.href= '/vidpop/play';
 		}
-    }, 1000 );
+    }, 1000 );  
+});
+
+(function ($) {
+    $(document).ready(function () {
+
+        // hide .navbar first
+        $(".navbar").addClass('hideme');
+
+        // fade in .navbar
+        $(function () {
+            $(window).scroll(function () {
+                // set distance user needs to scroll before we fadeIn navbar
+                if ($(this).scrollTop() > 100) {
+                    $('.navbar').removeClass('hideme');
+                } else {
+                    $('.navbar').addClass('hideme');
+                }
+            });
+        });
+    });
+}(jQuery));
+
+/* Show navbar */
+
+$(function () {
+    $('#shownav').hover(function () {
+        $('.navbar').removeClass('hideme');
+    });
+});
+
+/* when navbar is hovered over it will override previous */
+
+$(function () {
+    $('.navbar').hover(function () {
+        $('.navbar').removeClass('hideme');
+    }, function () {
+        $('.navbar').addClass('hideme');
+    });
 });
 </script>
 {% endblock %}
