@@ -21,11 +21,17 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 	<style>
-		
+		body {
+			background: white url("bg-12-full.jpg");
 
-		
+		}
 		#navigationbar {
+		
+			font: italic bold 30px/30px Georgia, serif;
 			
+			}
+		#registration-navbar {
+		
 			font: italic bold 30px/30px Georgia, serif;
 			
 			}
@@ -33,10 +39,7 @@
 	
 	</style>
 	
-	
-	
-	
-  </head>
+	</head>
 
   <body>
 
@@ -52,7 +55,7 @@
           <a class="navbar-brand" href="/vidpop/">VideoPop</a>
 		  <a class="navbar-brand" href="/vidpop/scores">Highscores</a>
         </div>
-        <div class="navbar-collapse collapse">
+        <div class="navbar-collapse collapse" id = "registration-navbar">
           <ul class="nav navbar-nav navbar-right">
 			{% if user.is_authenticated %}
 				<li class="navbar-text">Welcome, {{ user.username }}!</li>
