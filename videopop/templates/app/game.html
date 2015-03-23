@@ -3,6 +3,8 @@
 {% load staticfiles %}
 	
 {% block body_block %}
+
+<head>
 <style>
 #shownav {
     height: 20px;
@@ -21,8 +23,13 @@
 .navbar.hideme {
     opacity: 0;
 }
-</style>
 
+h1 {
+	color: green;
+
+}
+</style>
+</head>
 		{% if source %}
 		<table>
 		<tr>
@@ -53,7 +60,7 @@
 			<br>
 		{% endfor %}
 
-		<strong>{{ answers }}</strong>
+		<h1><strong>{{ answers }}</strong></h1>
 		<br>
 		<br>
 			
