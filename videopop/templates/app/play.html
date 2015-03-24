@@ -47,6 +47,8 @@
 		height: 486px;
 		z-index: 1;
 		text-align: center;
+		background-color: #000;
+		color: #FFF;
 	}
 
 	.overlayContent{
@@ -68,13 +70,13 @@
 	<div class="overlay" id="start">
 		<div class="overlayContent">
 			<p id="welcome">Loading...</p>
-			<input type="button" value="Start" id="startButton" onclick="startGame()" />
+			<input type="button" value="Start" id="startButton" class="btn-default" onclick="startGame()" />
 		</div>
 	</div>
 	<div class="overlay" id="end">
 		<div class="overlayContent">
 			<p class="greeting">Game over!</p>
-			<table>
+			<table class="table">
 				<tr>
 					<td>Score:</td>
 					<td id="finalScore">0</td>
@@ -89,17 +91,17 @@
 				</tr>
 			</table>
 
-			<input type="button" value="Play again?" id="restart" onclick="startGame()" />
-			<input type="button" value="Submit score" id="submit" action="/app/submit/" />
+			<input type="button" value="Play again?" id="restart" class="btn-default" onclick="startGame()" />
+			<input type="button" value="Submit score" id="submit" class="btn-default" action="/app/submit/" />
 		</div>
 	</div>
 	<div id="player"></div>
 	<div id="controls">
 		<div id="buttons">
-			<button class="answer" id="0" onclick="answerButton(0)">Answer 1</button>
-			<button class="answer" id="1" onclick="answerButton(1)">Answer 2</button>
-			<button class="answer" id="2" onclick="answerButton(2)">Answer 3</button>
-			<button class="answer" id="3" onclick="answerButton(3)">Answer 4</button>
+			<button class="answer btn-default" id="0" onclick="answerButton(0)">Answer 1</button>
+			<button class="answer btn-default" id="1" onclick="answerButton(1)">Answer 2</button>
+			<button class="answer btn-default" id="2" onclick="answerButton(2)">Answer 3</button>
+			<button class="answer btn-default" id="3" onclick="answerButton(3)">Answer 4</button>
 		</div>
 		Time remaining: <span id="time">120</span>
 		Score: <span id="score">0</span>
