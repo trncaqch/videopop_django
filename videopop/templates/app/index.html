@@ -7,31 +7,31 @@
 		<head>
 		<style>
 		
-		h1 {
+		
+		
+		#welcome {
 			font: italic bold 50px/50px Georgia, serif;
-			
+			color: white;
+			background-color: #000;
+			background-color: rgba(0,0,0,0.7);
 			}
-		h2 {
+		#playbutton {
 			display: block;
 			margin-left: 30%;
 			margin-right: 30%;
 			}
-		
-		
-		
+
 		</style>
 		</head>
-		
-        <h1>
-		<div class = "section">
+
+		<div class = "section" id = "welcome">
 		Welcome to this very innovative and interactive game, called Videopop
 		</div>
-		</h1>
-		<h2>
+		
 		<div class = "images" id = "playbutton">
 		<a href= "/vidpop/play">
-		<img src = "{% static "images/logo.png" %} "alt = " logo"/>
+		<img src = "{% static "images/logo2.png" %} "alt = " logo"/>
 		</a>
 		</div>
-		</h2>
+
 {% endblock %}

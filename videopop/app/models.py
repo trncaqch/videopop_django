@@ -33,7 +33,7 @@ class Game(models.Model):
 class Score(models.Model):
     date = models.DateTimeField(default=datetime.datetime.now)
     user = models.ForeignKey(User)
-    score = models.IntegerField(default=0)
+    score = models.DecimalField(default=0, max_digits = 7, decimal_places = 2)
     correctAnswers = models.IntegerField(default=0)
     videosSeen = models.IntegerField(default=0)
 

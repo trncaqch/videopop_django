@@ -2,6 +2,7 @@
 
 {% load staticfiles %}
 
+
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -21,17 +22,11 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 	<style>
-		body {
-			background: white url("/static/images/montage.jpg");
+		
 
-		}
+		
 		#navigationbar {
-		
-			font: italic bold 30px/30px Georgia, serif;
 			
-			}
-		#registration-navbar {
-		
 			font: italic bold 30px/30px Georgia, serif;
 			
 			}
@@ -39,10 +34,13 @@
 	
 	</style>
 	
-	</head>
+	
+	
+	
+  </head>
 
   <body>
-
+	<div class="navbar-outer">
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id = "navigationbar">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -52,20 +50,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/vidpop/">VideoPop</a>
-		  <a class="navbar-brand" href="/vidpop/scores">Highscores</a>
+          <a class="navbar-brand" href="/vidpop/" method = "POST", type = "restart" value = "restart">VideoPop</a>
+		  <a class="navbar-brand" href="/vidpop/scores" method = "POST", type = "restart" value = "restart">Highscores</a>
         </div>
-        <div class="navbar-collapse collapse" id = "registration-navbar">
+        <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-			{% if user.is_authenticated %}
-				<li class="navbar-text">Welcome, {{ user.username }}!</li>
-				<li><a href="{% url 'auth_password_change' %}">Change Password</a></li>
-				<li><a href="{% url 'auth_logout' %}?next=/vidpop/">Logout</a></li>
-								
-			{% else %}
-				<li><a href="{% url 'registration_register' %}">Register Here</a></li>
-				<li><a href="{% url 'auth_login' %}">Login</a></li>
-			{% endif %}
+
 
               </ul>
         </div>
@@ -75,8 +65,6 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-                {% block side_block %}
-				{% endblock %}
 
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -86,7 +74,7 @@
         </div>
       </div>
     </div>
-
+	</div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
