@@ -1,3 +1,6 @@
+import random
+import simplejson as json
+
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout, authenticate, login, logout
@@ -50,9 +53,15 @@ def register(request):
 
 def play(request):
 
-    playlist = Video.object.all()
+    videos = random.sample(Video.objects.all(), 5)
+    playlist = []
 
-    return render(request, 'app/play.html', {})
+    for video in videos:
+        playlist.append({"title" : video.name, "id" : video.videoid})
+
+    playlist = json.dumps(playlist)
+
+    return render(request, 'app/play.html', {'playlist' : playlist})
 
 
 def user_login(request): 

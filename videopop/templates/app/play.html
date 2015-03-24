@@ -102,13 +102,7 @@
 	</div>
 </div>
 <script>
-
-
-	var videos =   [
-					{"id": "9bZkp7q19f0", "title" : "Psy - Gangnam Style"},
-					{"id": "WRu_-9MBpd4", "title" : "The Lonely Island - Great Day"}, 
-				 	{"id" : "ASO_zypdnsQ", "title" : "Psy - Gentleman"},
-				 	{"id" : "z5Otla5157c", "title": "The Lonely Island - YOLO"}];
+	var videos =  {{ playlist|safe }};
 	var videos_seen = 0;
 	var correct = 0;
 	var timer;

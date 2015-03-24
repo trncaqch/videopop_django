@@ -15,8 +15,6 @@ class UserProfile(models.Model):
 
 class Video(models.Model):
     name = models.CharField(max_length=128)
-    url = models.URLField(unique=True)
-    correctAnswer = models.CharField(max_length=128)
     videoid = models.CharField(max_length=128)
 
 
@@ -44,36 +42,3 @@ class Score(models.Model):
 
 def __unicode__(self):
     return str(self.score)
-
-
-class ListField(models.TextField):  # stolen from
-    __metaclass__ = models.SubfieldBase  # http://stackoverflow.com/questions/22340258/django-list-field-in-model
-    description = "Stores a python list"
-
-    def __init__(self, *args, **kwargs):
-        super(ListField, self).__init__(*args, **kwargs)
-
-    def to_python(self, value):
-        if not value:
-            value = []
-
-        if isinstance(value, list):
-            return value
-
-        return ast.literal_eval(value)
-
-    def get_prep_value(self, value):
-        if value is None:
-            return value
-
-        return unicode(value)
-
-    def value_to_string(self, obj):
-        value = self._get_val_from_obj(obj)
-        return self.get_db_prep_value(value)
-
-
-class RankingTable(models.Model):
-    best_scores = ListField()
-	
-	
