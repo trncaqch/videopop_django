@@ -36,6 +36,22 @@
 			font: italic bold 30px/30px Georgia, serif;
 			
 			}
+			
+		*::-webkit-input-placeholder {
+			color: black;
+		}
+		*:-moz-placeholder {
+			/* FF 4-18 */
+			color: black;
+		}
+		*::-moz-placeholder {
+			/* FF 19+ */
+			color: black;
+		}
+		*:-ms-input-placeholder {
+			/* IE 10+ */
+			color: black;
+		}
 	</style>	
 	</head>
 
@@ -61,8 +77,8 @@
 				<li><a href="{% url 'auth_logout' %}?next=/vidpop/">Logout</a></li>
 								
 			{% else %}
-				<li><a href="{% url 'registration_register' %}">Register Here</a></li>
-				<li><a href="{% url 'auth_login' %}">Login</a></li>
+				<li><a href="{% url 'auth_login' %}">Log in</a></li>
+				<li><a href="{% url 'registration_register' %}">Sign up</a></li>
 			{% endif %}
 
               </ul>

@@ -12,7 +12,6 @@ from gameViews import *
 from models import Video
 
 def index(request):
-    restart()
     if request.user.is_authenticated():
         user = request.user
         top_scores = Score.objects.filter(user=user).order_by('-score')[:5]
@@ -82,7 +81,7 @@ def play(request):
     return render(request, 'app/play.html', {'playlist' : playlist, 'wrong' : wrong})
 
 
-def user_login(request): 
+def user_login(request):
     if request.method == 'POST':
         # Gather the username and password provided by the user.
         username = request.POST.get('username')
@@ -99,8 +98,7 @@ def user_login(request):
                 return HttpResponse("Your account is disabled.")
         else:
             # Bad login details were provided.
-            print "Invalid login details: {0}, {1}".format(username, password)
-            return HttpResponse("Invalid login details supplied.")
+            return HttpResponseRedirect('/vidpop/')
 
     # The request is not a HTTP POST, so display the login form.
     # This scenario would most likely be a HTTP GET.
