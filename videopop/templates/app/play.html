@@ -18,6 +18,10 @@
 		display: none;
 	}
 
+	#startButton{
+		display: none;
+	}
+
 	#game{
 		position: relative;
 		width: 1000px;
@@ -63,8 +67,8 @@
 <div id="game">
 	<div class="overlay" id="start">
 		<div class="overlayContent">
-			<p class="greeting">Are you ready?</p>
-			<input type="button" value="Start" id="start" onclick="startGame()" />
+			<p id="welcome">Loading...</p>
+			<input type="button" value="Start" id="startButton" onclick="startGame()" />
 		</div>
 	</div>
 	<div class="overlay" id="end">
@@ -103,6 +107,7 @@
 </div>
 <script>
 	var videos =  {{ playlist|safe }};
+	var wrong = {{ wrong|safe }};
 	var videos_seen = 0;
 	var correct = 0;
 	var timer;
@@ -130,6 +135,7 @@
 			width: '864',
 			videoId: videos[videos_seen]['id'],
 			playerVars: {
+				'origin' : 'videopop.pythonanywhere.com',
 				'enablejsapi' : 1,      //Enable JS control
 				'controls' : 0,         //No player controls
 				'disablekb' : 1,        //No keyboard controls
@@ -146,6 +152,8 @@
 
 	function onPlayerReady(event){
 		player.mute()
+		document.getElementById("welcome").innerHTML = "Ready to play!";
+		document.getElementById("startButton").style.display = 'inline';
 	}
 
 	function onPlayerStateChange(event){
@@ -207,7 +215,7 @@
 			if(i == correct){
 				buttons[i].innerHTML = videos[videos_seen]["title"];
 			} else{
-				buttons[i].innerHTML = "Wrong.";
+				buttons[i].innerHTML = wrong[Math.floor(Math.random() * wrong.length)];
 			}
 		}
 

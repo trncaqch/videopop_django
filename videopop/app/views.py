@@ -54,14 +54,20 @@ def register(request):
 def play(request):
 
     videos = random.sample(Video.objects.all(), 5)
+    titles = random.sample(Video.objects.all(), 5)
     playlist = []
+    wrong = []
 
     for video in videos:
         playlist.append({"title" : video.name, "id" : video.videoid})
 
-    playlist = json.dumps(playlist)
+    for title in titles:
+        wrong.append(title.name)
 
-    return render(request, 'app/play.html', {'playlist' : playlist})
+    playlist = json.dumps(playlist)
+    wrong = json.dumps(wrong)
+
+    return render(request, 'app/play.html', {'playlist' : playlist, 'wrong' : wrong})
 
 
 def user_login(request): 
