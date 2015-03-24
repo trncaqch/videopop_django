@@ -13,7 +13,6 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.user.name
 
-
 class Video(models.Model):
     name = models.CharField(max_length=128)
     url = models.URLField(unique=True)

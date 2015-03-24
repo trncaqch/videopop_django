@@ -8,6 +8,12 @@ from youName import getVideoName
 from youParse import crawl
 from app.models import Video
 
+videos = {[{"id": "9bZkp7q19f0", "title" : "Psy - Gangnam Style"},
+            {"id": "WRu_-9MBpd4", "title" : "The Lonely Island - Great Day"}, 
+            {"id" : "ASO_zypdnsQ", "title" : "Psy - Gentleman"},
+            {"id" : "z5Otla5157c", "title": "The Lonely Island - YOLO"}]}
+
+
 def populate():
     print "inside populate"
     videoList = crawl(

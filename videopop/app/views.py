@@ -46,6 +46,8 @@ def register(request):
             'app/register.html',
             {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
 
+def play(request):
+    return render(request, 'app/play.html', {})
 
 
 def user_login(request): 
