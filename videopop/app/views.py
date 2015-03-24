@@ -3,9 +3,21 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout, authenticate, login, logout
 from app.forms import UserForm, UserProfileForm
 from django.contrib.auth.decorators import login_required
+from models import Score
+from gameViews import *
 
 def index(request):
-    return render(request, 'app/index.html')
+    restart()
+    if request.user.is_authenticated():
+        user = request.user
+        top_scores = Score.objects.filter(user=user).order_by('-score')[:5]
+        last_scores = Score.objects.filter(user=user).order_by('-date')[:5]
+        context_dict = {"top_scores": top_scores,
+                        "last_scores": last_scores}
+    else:
+        top_scores = Score.objects.order_by('-score')[:10]
+        context_dict = {"top_scores": top_scores}
+    return render(request, 'app/index.html', context_dict)
 
 def register(request):
     # A boolean value for telling the template whether the registration was successful.
