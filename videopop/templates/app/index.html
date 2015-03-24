@@ -1,0 +1,37 @@
+{% extends 'app/base.html' %}
+
+{% load staticfiles %}
+
+{% block body_block %}
+		
+		<head>
+		<style>
+		
+		
+		
+		#welcome {
+			font: italic bold 50px/50px Georgia, serif;
+			color: white;
+			background-color: #000;
+			background-color: rgba(0,0,0,0.7);
+			}
+		#playbutton {
+			display: block;
+			margin-left: 30%;
+			margin-right: 30%;
+			}
+
+		</style>
+		</head>
+
+		<div class = "section" id = "welcome">
+		Welcome to this very innovative and interactive game, called Videopop
+		</div>
+		
+		<div class = "images" id = "playbutton">
+		<a href= "/vidpop/play">
+		<img src = "{% static "images/logo2.png" %} "alt = " logo"/>
+		</a>
+		</div>
+
+{% endblock %}

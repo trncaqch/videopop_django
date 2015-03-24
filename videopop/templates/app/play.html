@@ -1,0 +1,247 @@
+{% extends 'app/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %}Play{% endblock %}
+
+{% block stylesheet %}
+<style>
+	body{
+		margin: 0px;
+	}
+
+	#player{
+		z-index: 0;
+	}
+
+	#buttons{
+		display: none;
+	}
+
+	#startButton{
+		display: none;
+	}
+
+	#game{
+		position: relative;
+		width: 1000px;
+	}
+
+	#controls{
+		position: absolute;
+		top: 0px;
+		left: 864px;
+		width: 144px;
+	}
+
+	.answer{
+		display: block;
+		width: 100%;
+		margin: 5px 0px;
+	}
+
+	.overlay{
+		position: absolute;
+		background-color: #FFF;
+		width: 1000px;
+		height: 486px;
+		z-index: 1;
+		text-align: center;
+	}
+
+	.overlayContent{
+		position: absolute;
+  		top: 50%;
+  		left: 50%;
+   		transform: translate(-50%, -50%);
+	}
+
+	#end{
+		display: none;
+	}
+</style>
+
+{% endblock %}
+
+{% block body_block %}
+<div id="game">
+	<div class="overlay" id="start">
+		<div class="overlayContent">
+			<p id="welcome">Loading...</p>
+			<input type="button" value="Start" id="startButton" onclick="startGame()" />
+		</div>
+	</div>
+	<div class="overlay" id="end">
+		<div class="overlayContent">
+			<p class="greeting">Game over!</p>
+			<table>
+				<tr>
+					<td>Score:</td>
+					<td id="finalScore">0</td>
+				</tr>
+				<tr>
+					<td>Correct:</td>
+					<td id="correct">0</td>
+				</tr>
+				<tr>
+					<td>Incorrect:</td>
+					<td id="incorrect">0</td>
+				</tr>
+			</table>
+
+			<input type="button" value="Play again?" id="restart" onclick="startGame()" />
+			<input type="button" value="Submit score" id="submit" action="/app/submit/" />
+		</div>
+	</div>
+	<div id="player"></div>
+	<div id="controls">
+		<div id="buttons">
+			<button class="answer" id="0" onclick="answerButton(0)">Answer 1</button>
+			<button class="answer" id="1" onclick="answerButton(1)">Answer 2</button>
+			<button class="answer" id="2" onclick="answerButton(2)">Answer 3</button>
+			<button class="answer" id="3" onclick="answerButton(3)">Answer 4</button>
+		</div>
+		Time remaining: <span id="time">120</span>
+		Score: <span id="score">0</span>
+	</div>
+</div>
+<script>
+	var videos =  {{ playlist|safe }};
+	var wrong = {{ wrong|safe }};
+	var videos_seen = 0;
+	var correct = 0;
+	var timer;
+	var time = 40; //2-minute timer for whole game
+	var current_video_time = 30; //30 second timer per video
+	var score = 0;
+	var correct = 0;
+	var incorrect = 0;
+
+	var playing = false;
+
+	var buttons = document.getElementById("buttons").children;
+
+	var tag = document.createElement('script');
+
+	tag.src = "https://www.youtube.com/iframe_api";
+
+	var firstScriptTag = document.getElementsByTagName('script')[0];
+	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+	var player;
+	function onYouTubeIframeAPIReady() {
+		player = new YT.Player('player', {
+			height: '486',
+			width: '864',
+			videoId: videos[videos_seen]['id'],
+			playerVars: {
+				'origin' : 'videopop.pythonanywhere.com',
+				'enablejsapi' : 1,      //Enable JS control
+				'controls' : 0,         //No player controls
+				'disablekb' : 1,        //No keyboard controls
+				'iv_load_policy' : 3,   //No annotations
+				'showinfo' : 0,         //No video info
+				'modestbranding' : 1    //Smaller YT logos
+			},
+			events: {
+				'onReady': onPlayerReady,
+				'onStateChange': onPlayerStateChange
+			}
+		});
+	}
+
+	function onPlayerReady(event){
+		player.mute()
+		document.getElementById("welcome").innerHTML = "Ready to play!";
+		document.getElementById("startButton").style.display = 'inline';
+	}
+
+	function onPlayerStateChange(event){
+		if (event.data == YT.PlayerState.PAUSED){
+			event.target.playVideo();
+		} else if(event.data == YT.PlayerState.ENDED){
+			//ENDED event is thrown again when loading a new video for some reason, so
+			//check that the new video has started playing before answering wrong again.
+			if(playing){answerButton(4);} //Button 4 is always wrong
+			playing = false; //Pause timer until next video has loaded
+		} else if(event.data ==YT.PlayerState.BUFFERING){
+			playing = false; //Time does not elapse during loading
+		} else if(event.data == YT.PlayerState.PLAYING){
+			playing = true;
+		}
+	}
+
+	//Game logic
+
+	//Handles timing, called once per second by an interval.
+	function tick(){
+		if(playing){  //Only update time if video is currently playing (stops timer decreasing while videos are loading)
+			time--;	  //Decrement remaing time
+			current_video_time--;
+			document.getElementById("time").innerHTML = time; //Update display
+			if(time <= 0){ //Check if game has finished.
+				endGame();
+			}
+		}
+	}
+
+	//Handles scoring
+	function answerButton(id){
+		//Scoring
+		if (id == correct){ //Correct Answer
+			score += current_video_time; //Points award equal to remaining length of video, time unaffected
+			correct += 1;
+		} else{ //Wrong answer
+			time -= current_video_time; //Time penalty equal to remaining length of video, score unaffected
+			incorrect += 1;
+		}
+
+		//Update UI
+		document.getElementById("time").innerHTML = time; 
+		document.getElementById("score").innerHTML = score;
+
+		//On to next video
+		player.stopVideo();
+		nextVideo();
+	}
+
+	//Gets the next video from the list, loads it at a random start point and populates the answer buttons.
+	function nextVideo(){
+		var start = 30 + Math.floor(Math.random() * 60) //Start between 30 and 90 seconds into the video
+		correct = Math.floor(Math.random() * 4) //Correct button is randomly selected
+
+
+		for(var i = 0; i < buttons.length; i++){
+			if(i == correct){
+				buttons[i].innerHTML = videos[videos_seen]["title"];
+			} else{
+				buttons[i].innerHTML = wrong[Math.floor(Math.random() * wrong.length)];
+			}
+		}
+
+		player.loadVideoById({'videoId' : videos[videos_seen]["id"], 'startSeconds' : start, 'endSeconds' : start + 30});
+		current_video_time = 30; //Reset video timer
+		videos_seen += 1;
+	}
+
+	function startGame(){
+		timer = setInterval(tick, 1000);
+		nextVideo();
+
+		document.getElementById("start").style.display = 'none';
+		document.getElementById("end").style.display = 'none';
+		document.getElementById("buttons").style.display = 'block';
+	}
+
+	function endGame(){
+		clearInterval(timer);
+		player.stopVideo();
+		document.getElementById("correct").innerHTML = correct;
+		document.getElementById("incorrect").innerHTML = incorrect;
+		document.getElementById("finalScore").innerHTML = score;
+		document.getElementById("buttons").style.display = 'none';
+		document.getElementById("end").style.display = 'block';
+	}
+
+</script>
+{% endblock %}

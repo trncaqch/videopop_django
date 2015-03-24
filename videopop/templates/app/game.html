@@ -1,0 +1,130 @@
+{% extends "app/base.html" %}
+
+{% load staticfiles %}
+	
+{% block body_block %}
+
+<head>
+<style>
+#shownav {
+    height: 20px;
+}
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    opacity: 1;
+    -webkit-transition: opacity 0.5s ease-in-out;
+    -moz-transition: opacity 0.5s ease-in-out;
+    -ms-transition: opacity 0.5s ease-in-out;
+    -o-transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out;
+}
+.navbar.hideme {
+    opacity: 0;
+}
+
+h1 {
+	color: green;
+
+}
+</style>
+</head>
+		{% if source %}
+		<table>
+		<tr>
+		<td>
+			<div id="gameTimer">test</div>
+		</td>
+		<td>
+			<iframe width="560" height="315"
+			src= {{ source }}
+			frameborder="0"></iframe>
+		</td>
+		<td></td>
+		<td>
+			<div id="time"></div>
+		</td>
+		</tr>
+		</table>
+			<br>
+		{% endif %}
+		
+		<br>
+		{% for video in videos %}
+			<form method = 'post' action = {% url 'play' %}>
+				{% csrf_token %}
+				<button class="btn btn-primary" method = 'post' type="submit" name="submit" id="{{video.videoid}}" value="{{video.name}}">
+					{{video.name}}</button>				
+			<br>
+			<br>
+		{% endfor %}
+
+		<h1><strong>{{ answers }}</strong></h1>
+		<br>
+		<br>
+			
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>	
+$(window).ready( function() {
+    var time = 5
+	var gameTime = {{ timeleft }}
+	
+	$('#time').html(time);
+	$('#gameTimer').html(gameTime);
+    setInterval( function() {
+        time--;
+		gameTime--
+        $('#time').html(time);
+		$('#gameTimer').html(gameTime);
+        if (time === 0) {
+            window.location.href= '/vidpop/play';
+        } 
+		if (gameTime <= 0) {
+			window.location.href= '/vidpop/play';
+		}
+    }, 1000 );  
+});
+
+(function ($) {
+    $(document).ready(function () {
+
+        // hide .navbar first
+        $(".navbar").addClass('hideme');
+
+        // fade in .navbar
+        $(function () {
+            $(window).scroll(function () {
+                // set distance user needs to scroll before we fadeIn navbar
+                if ($(this).scrollTop() > 100) {
+                    $('.navbar').removeClass('hideme');
+                } else {
+                    $('.navbar').addClass('hideme');
+                }
+            });
+        });
+    });
+}(jQuery));
+
+/* Show navbar */
+
+$(function () {
+    $('#shownav').hover(function () {
+        $('.navbar').removeClass('hideme');
+    });
+});
+
+/* when navbar is hovered over it will override previous */
+
+$(function () {
+    $('.navbar').hover(function () {
+        $('.navbar').removeClass('hideme');
+    }, function () {
+        $('.navbar').addClass('hideme');
+    });
+});
+</script>
+{% endblock %}
+
+		
