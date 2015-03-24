@@ -4,6 +4,8 @@ from django.contrib.auth import logout, authenticate, login, logout
 from app.forms import UserForm, UserProfileForm
 from django.contrib.auth.decorators import login_required
 
+from models import Video
+
 def index(request):
     return render(request, 'app/index.html')
 
@@ -47,6 +49,9 @@ def register(request):
             {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
 
 def play(request):
+
+    playlist = Video.object.all()
+
     return render(request, 'app/play.html', {})
 
 
