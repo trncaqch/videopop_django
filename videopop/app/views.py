@@ -65,8 +65,8 @@ def register(request):
 @csrf_exempt
 def play(request):
 
-    videos = random.sample(Video.objects.all(), 5)
-    titles = random.sample(Video.objects.all(), 5)
+    videos = random.sample(Video.objects.all(), 20)
+    titles = random.sample(Video.objects.all(), 60)
     playlist = []
     wrong = []
 

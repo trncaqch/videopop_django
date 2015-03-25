@@ -108,8 +108,9 @@
 			<button class="answer btn-default" id="2" onclick="answerButton(2)">Answer 3</button>
 			<button class="answer btn-default" id="3" onclick="answerButton(3)">Answer 4</button>
 		</div>
-		Time remaining: <span id="time">120</span>
-		Score: <span id="score">0</span>
+		Total time: <span id="time">90</span><br />
+		This video: <span id="vidtime">15</span><br />
+		Score: <span id="score">0</span><br />
 	</div>
 </div>
 <script>
@@ -118,8 +119,8 @@
 	var videos_seen = 0;
 	var correct = 0;
 	var timer;
-	var time = 40; //2-minute timer for whole game
-	var current_video_time = 30; //30 second timer per video
+	var time = 90; //90 second timer for whole game
+	var current_video_time = 15; //15 second timer per video
 	var score = 0;
 	var correct = 0;
 	var incorrect = 0;
@@ -187,6 +188,7 @@
 			time--;	  //Decrement remaing time
 			current_video_time--;
 			document.getElementById("time").innerHTML = time; //Update display
+			document.getElementById("vidtime").innerHTML = current_video_time;
 			if(time <= 0){ //Check if game has finished.
 				endGame();
 			}
@@ -205,7 +207,7 @@
 		}
 
 		//Update UI
-		document.getElementById("time").innerHTML = time; 
+		document.getElementById("time").innerHTML = time;
 		document.getElementById("score").innerHTML = score;
 
 		//On to next video
@@ -227,8 +229,8 @@
 			}
 		}
 
-		player.loadVideoById({'videoId' : videos[videos_seen]["id"], 'startSeconds' : start, 'endSeconds' : start + 30});
-		current_video_time = 30; //Reset video timer
+		player.loadVideoById({'videoId' : videos[videos_seen]["id"], 'startSeconds' : start, 'endSeconds' : start + 15});
+		current_video_time = 15; //Reset video timer
 		videos_seen += 1;
 	}
 

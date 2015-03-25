@@ -10,15 +10,14 @@ from app.models import Video
 
 
 def populate():
-    videoList = crawl(
-        "https://www.youtube.com/watch?v=CevxZvSJLk8&list=PLWRJVI4Oj4IaYIWIpFlnRJ_v_fIaIl6Ey"
-        )
+    videoList = crawl("https://www.youtube.com/watch?v=09R8_2nJtjg&list=PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI")
+    videoList += crawl("https://www.youtube.com/watch?v=CevxZvSJLk8&list=PLWRJVI4Oj4IaYIWIpFlnRJ_v_fIaIl6Ey")
     
     for url in videoList:
         videoid = url.split("=")[1]
         name = getVideoName(videoid)
         add_video(name, videoid)
-        print url
+        #print url
         
     
 def add_video(name, videoid):
