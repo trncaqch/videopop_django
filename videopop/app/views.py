@@ -80,6 +80,18 @@ def play(request):
 
     return render(request, 'app/play.html', {'playlist' : playlist, 'wrong' : wrong})
 
+@login_required
+def submit_score(request):
+
+    if request.method == 'GET':
+        score = Score.objects.create(user=request.user)
+        score.score = request.GET['score']
+        score.correctAnswers = request.GET['correctAnswers']
+        score.videosSeen = request.GET['videosSeen']
+
+        score.save()
+
+    return HttpResponse("Score saved!")
 
 def user_login(request):
     if request.method == 'POST':

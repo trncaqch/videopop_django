@@ -63,6 +63,9 @@
 	}
 </style>
 
+<script src="{% static "js/videopop-ajax.js" %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 {% endblock %}
 
 {% block body_block %}
@@ -91,8 +94,8 @@
 				</tr>
 			</table>
 
-			<input type="button" value="Play again?" id="restart" class="btn-default" onclick="startGame()" />
-			<input type="button" value="Submit score" id="submit" class="btn-default" action="/app/submit/" />
+			<input type="button" value="Play again?" id="restart" class="btn-default" onclick="reload()" />
+			{% if user.is_authenticated %}<input type="button" value="Submit score" id="submit" class="btn-default" />{% endif %}
 		</div>
 	</div>
 	<div id="player"></div>
@@ -243,6 +246,10 @@
 		document.getElementById("finalScore").innerHTML = score;
 		document.getElementById("buttons").style.display = 'none';
 		document.getElementById("end").style.display = 'block';
+	}
+
+	function reload(){
+		location.reload(true);
 	}
 
 </script>
