@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% extends 'app/base.html' %}
+
+{% load staticfiles %}
+	
+<style>
+</style>
+{% block body_block %}
+<div class="hero-unit">
+    <h1>Add Videos</h1>
+
+    <div class="container">
+    <form class="form-signin span4" method="post" action="/vidpop/add_videos/">
+        <h2 class="form-signin-heading">Enter Youtube Playlist URL</h2>
+		{% csrf_token %}
+
+        Playlist URL <input type="text" class="input-block-level" placeholder="Youtube URL" name="youtube" value="" size="50" />
+        <br/>
+		<br/>
+        <button class="btn btn-primary" type="submit">Add Playlist</button>
+		<strong> {{ message }} </strong>
+    </form>
+
+    </div>
+    <!-- /container -->
+</div>
+{% endblock %}

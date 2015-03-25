@@ -9,8 +9,6 @@
 		#welcome {
 			font: italic bold 50px/50px Georgia, serif;
 			color: white;
-			background-color: #000;
-			background-color: rgba(0,0,0,0.7);
 			}
 		#playbutton {
 			display: block;
@@ -19,11 +17,18 @@
 			}
 		#scores {
 			font-size: 112.5%;
-			color: black;
+			color: #383838;
 		}
+		
+		#sidebar {
+			background-color: #222222
+			
+		}
+		
 		h1, h2, h3	{
-			color: black;
+			color: #9D9D9D;
 			font-size: 250%;
+			font: italic bold 30px/30px Georgia, serif;
 			}
 		
 		</style>
@@ -38,7 +43,7 @@
 		<img src = "{% static 'images/logo.png' %} "alt = " logo"/>
 		</a>
 		</div>
-	<div class="col-sm-3 col-md-2 sidebar">
+	<div class="col-sm-3 col-md-2 sidebar" id = "sidebar">
         {% block side_block %}
 			{% if user.is_authenticated %}
 				<br>

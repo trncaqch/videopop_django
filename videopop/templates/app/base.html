@@ -68,6 +68,7 @@
           </button>
           <a class="navbar-brand" href="/vidpop/">VideoPop</a>
 		  <a class="navbar-brand" href="/vidpop/scores">Highscores</a>
+		  {% if user.is_superuser %}<a class="navbar-brand" href="/vidpop/add_videos">Add Videos</a>{% endif %}
         </div>
         <div class="navbar-collapse collapse" id = "registration-navbar">
           <ul class="nav navbar-nav navbar-right">

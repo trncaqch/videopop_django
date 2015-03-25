@@ -93,9 +93,11 @@
 					<td id="incorrect">0</td>
 				</tr>
 			</table>
-
+			
 			<input type="button" value="Play again?" id="restart" class="btn-default" onclick="reload()" />
-			{% if user.is_authenticated %}<input type="button" value="Submit score" id="submit" class="btn-default" />{% endif %}
+
+			{% if user.is_authenticated %}<input type="button" value='Submit Score' id="submit" class="btn-default" /> 
+			{% else %} <br> You have to be logged in to submit your score {% endif %}
 		</div>
 	</div>
 	<div id="player"></div>
@@ -147,6 +149,7 @@
 				'iv_load_policy' : 3,   //No annotations
 				'showinfo' : 0,         //No video info
 				'modestbranding' : 1    //Smaller YT logos
+				
 			},
 			events: {
 				'onReady': onPlayerReady,
