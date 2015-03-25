@@ -8,6 +8,7 @@ from app.forms import UserForm, UserProfileForm
 from django.contrib.auth.decorators import login_required
 from models import Score
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
 
 from models import Video
 
@@ -62,7 +63,7 @@ def register(request):
             'app/register.html',
             {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
 
-@csrf_exempt
+
 def play(request):
 
     videos = random.sample(Video.objects.all(), 20)
@@ -81,10 +82,12 @@ def play(request):
 
     return render(request, 'app/play.html', {'playlist' : playlist, 'wrong' : wrong})
 
+@csrf_exempt
 def submit_score(request):
 
     if request.method == 'POST':
-        score = Score.objects.create(user=request.user)
+        u = User.objects.get(username=request.user)
+        score = Score.objects.create(user=u)
         score.score = request.POST.get('score')
         score.correctAnswers = request.POST.get('correct')
         score.videosSeen = request.POST.get('videos_seen')

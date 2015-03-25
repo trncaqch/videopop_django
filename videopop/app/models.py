@@ -28,7 +28,7 @@ class Game(models.Model):
 class Score(models.Model):
     date = models.DateTimeField(default=datetime.datetime.now)
     user = models.ForeignKey(User)
-    score = models.IntegerField(max_length=128)
+    score = models.IntegerField(max_length=128, default = 0)
     correctAnswers = models.IntegerField(default=0)
     videosSeen = models.IntegerField(default=0)
 

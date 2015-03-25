@@ -63,7 +63,6 @@
 	}
 </style>
 
-<script src="{% static "js/videopop-ajax.js" %}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 {% endblock %}
@@ -114,6 +113,15 @@
 	</div>
 </div>
 <script>
+	//AJAX
+	$('#submit').click(function(){
+		$.post('/vidpop/submit_score/', {'score': score, 'correct': correct, 'videos_seen': videos_seen}, function(data){
+			alert("Score submitted");
+			$('#submit').attr("value", "Score submitted!");
+		});
+	});
+
+	//Game
 	var videos =  {{ playlist|safe }};
 	var wrong = {{ wrong|safe }};
 	var videos_seen = 0;
@@ -143,7 +151,7 @@
 			width: '864',
 			videoId: videos[videos_seen]['id'],
 			playerVars: {
-				'origin' : 'videopop.pythonanywhere.com',
+				'origin' : 'vidpop.pythonanywhere.com',
 				'enablejsapi' : 1,      //Enable JS control
 				'controls' : 0,         //No player controls
 				'disablekb' : 1,        //No keyboard controls
