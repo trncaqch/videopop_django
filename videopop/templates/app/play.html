@@ -8,6 +8,11 @@
 <style>
 	body{
 		margin: 0px;
+		-webkit-transition: all 1s ease-in-out;
+		-moz-transition: all 1s ease-in-out;
+		-o-transition: all 1s ease-in-out;
+		-ms-transition: all 1s ease-in-out;
+		transition: all 1s ease-in-out;
 	}
 
 	#player{
@@ -15,7 +20,7 @@
 	}
 	
 	#info{
-		color: black;
+		color: white;
 	}
 	#buttons{
 		display: none;
@@ -91,13 +96,12 @@
 					<td id="correct">0</td>
 				</tr>
 				<tr>
-					<td>Incorrect:</td>
-					<td id="incorrect">0</td>
+					<td>Videos seen:</td>
+					<td id="videos_seen">0</td>
 				</tr>
 			</table>
 			
 			<input type="button" value="Play again?" id="restart" class="btn-default" onclick="reload()" />
-
 			{% if user.is_authenticated %}<input type="button" value='Submit Score' id="submit" class="btn-default" /> 
 			{% else %} <br> You have to be logged in to submit your score {% endif %}
 		</div>
@@ -105,25 +109,24 @@
 	<div id="player"></div>
 	<div id="controls">
 		<div id="buttons">
-			<button class="answer btn-default" id="0" onclick="answerButton(0)">Answer 1</button>
-			<button class="answer btn-default" id="1" onclick="answerButton(1)">Answer 2</button>
-			<button class="answer btn-default" id="2" onclick="answerButton(2)">Answer 3</button>
-			<button class="answer btn-default" id="3" onclick="answerButton(3)">Answer 4</button>
+				<button class="answer btn-default" id="0" onclick="answerButton(0)">Answer 1</button>
+				<button class="answer btn-default" id="1" onclick="answerButton(1)">Answer 2</button>
+				<button class="answer btn-default" id="2" onclick="answerButton(2)">Answer 3</button>
+				<button class="answer btn-default" id="3" onclick="answerButton(3)">Answer 4</button>
 		</div>
-		<div id = "info">
+	<div id = "info">
 		<strong>
 		Total time: <span id="time">90</span><br />
 		This video: <span id="vidtime">15</span><br />
 		Score: <span id="score">0</span><br />
 		</strong>
-		</div>
+	</div>
 	</div>
 </div>
 <script>
 	//AJAX
 	$('#submit').click(function(){
 		$.post('/vidpop/submit_score/', {'score': score, 'correct': correct, 'videos_seen': videos_seen}, function(data){
-			alert("Score submitted");
 			$('#submit').attr("value", "Score submitted!");
 			$("#submit").prop('disabled', true);
 		});
@@ -151,6 +154,7 @@
 	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 	var player;
+
 	function onYouTubeIframeAPIReady() {
 		player = new YT.Player('player', {
 			height: '486',
@@ -251,27 +255,25 @@
 	function startGame(){
 		timer = setInterval(tick, 1000);
 		nextVideo();
-
 		document.getElementById("start").style.display = 'none';
 		document.getElementById("end").style.display = 'none';
 		document.getElementById("buttons").style.display = 'block';
-		//document.body.style.background = "#222222";
+		document.body.style.background = "#222222";		
 	}
 
 	function endGame(){
 		clearInterval(timer);
 		player.stopVideo();
 		document.getElementById("correct").innerHTML = correct;
-		document.getElementById("incorrect").innerHTML = incorrect;
+		document.getElementById("videos_seen").innerHTML = videos_seen;
 		document.getElementById("finalScore").innerHTML = score;
 		document.getElementById("buttons").style.display = 'none';
 		document.getElementById("end").style.display = 'block';
-		//document.body.style.background = '#F8F8F8 url("/static/images/bg-white.jpg")';
+		document.body.style.background = '#F8F8F8 url("/static/images/bg-white.jpg")';
 	}
 
 	function reload(){
 		location.reload(true);
 	}
-
 </script>
 {% endblock %}
