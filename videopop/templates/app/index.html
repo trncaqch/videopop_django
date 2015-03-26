@@ -4,45 +4,83 @@
 
 {% block body_block %}
 		
-		<head>
+	<head>
 		<style>
 		#welcome {
-			font: italic bold 50px/50px Georgia, serif;
-			color: white;
-			}
-		#playbutton {
-			display: block;
-			margin-left: 30%;
-			margin-right: 30%;
-			}
+			color: rgb(0, 0, 0);
+			font-size: 30px;
+			background-color: #F8F8F8;
+			text-shadow: rgb(224, 224, 224) 1px 1px 0px;
+			text-align: center;
+		}
+		.play_border {
+			margin:auto;
+			border: 2px solid rgba(0,0,0,0.7);
+			-webkit-border-radius: 100%;
+			-moz-border-radius: 100%;
+			border-radius: 100%;
+			width: 60px;
+			height: 60px;
+			-webkit-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
+			-moz-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
+			box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
+			-webkit-transition: all 0.5s ease;
+			-moz-transition: all 0.5s ease;
+			-o-transition: all 0.5s ease;
+			-ms-transition: all 0.5s ease;
+			transition: all 0.5s ease;
+			cursor: pointer;
+		}
+		.play_border:hover{
+			border-color: transparent;
+			-webkit-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
+			-moz-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
+			box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
+		}
+		.play_border:hover .play_button{
+			border-left: 15px solid rgba(0,0,0,0.5);
+		}
+		.play_border:active,.play_border:focus{
+			-webkit-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
+			-moz-box-shadow: 0px 0px 5.play_button:hoverpx 2px rgba(0, 0, 0, 0.2);
+			box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.2);
+		}
+		.play_button {
+			position:relative;
+			top: 14px;
+			left: 40%;
+			width: 0;
+			height: 0;
+			border-top: 15px solid transparent;
+			border-bottom: 15px solid transparent;
+			border-left: 15px solid rgba(0,0,0,0.8);
+		} 
 		#scores {
 			font-size: 112.5%;
 			color: #383838;
 		}
 		
-		#sidebar {
-			background-color: #222222
-			
-		}
-		
 		h1, h2, h3	{
-			color: #9D9D9D;
+			color: black;
 			font-size: 250%;
 			font: italic bold 30px/30px Georgia, serif;
 			}
 		
 		</style>
-		</head>
-
-		<div class = "section" id = "welcome">
-		Welcome to this very innovative and interactive game, called Videopop
+	</head>
+	<div class = "section" id = "welcome">
+		<div>
+			<p>Test your music video trivia skills! </p>
+			<p>Try and guess as many songs as you can before the time runs out! </p>
+			<p>Click the play button to start the game! </p>
 		</div>
-		
-		<div class = "images" id = "playbutton">
-		<a href= "/vidpop/play">
-		<img src = "{% static 'images/logo.png' %} "alt = " logo"/>
+		<a href = "/vidpop/play">
+			<div class="play_border">
+				<div class="play_button">
+				</div>
+			</div>
 		</a>
-		</div>
+	</div>
 	<div class="col-sm-3 col-md-2 sidebar" id = "sidebar">
         {% block side_block %}
 			{% if user.is_authenticated %}
@@ -80,6 +118,8 @@
 		{% endblock %}
 
      </div>
+	 <script>
+	 </script>
 
 {% endblock %}
 

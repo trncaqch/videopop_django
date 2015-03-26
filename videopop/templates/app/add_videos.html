@@ -4,6 +4,9 @@
 {% load staticfiles %}
 	
 <style>
+#format{
+	font-size: 20px;
+}
 </style>
 {% block body_block %}
 <div class="hero-unit">
@@ -13,7 +16,9 @@
     <form class="form-signin span4" method="post" action="/vidpop/add_videos/">
         <h2 class="form-signin-heading">Enter Youtube Playlist URL</h2>
 		{% csrf_token %}
-
+		<br>
+		<div id="format">Playlists must be in format: https://www.youtube.com/watch?<strong>VIDEO_ID</strong>&list=<strong>Playlist_ID</strong></div>
+		<br>
         Playlist URL <input type="text" class="input-block-level" placeholder="Youtube URL" name="youtube" value="" size="50" />
         <br/>
 		<br/>

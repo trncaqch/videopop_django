@@ -13,7 +13,10 @@
 	#player{
 		z-index: 0;
 	}
-
+	
+	#info{
+		color: white;
+	}
 	#buttons{
 		display: none;
 	}
@@ -107,9 +110,13 @@
 			<button class="answer btn-default" id="2" onclick="answerButton(2)">Answer 3</button>
 			<button class="answer btn-default" id="3" onclick="answerButton(3)">Answer 4</button>
 		</div>
+		<div id = "info">
+		<strong>
 		Total time: <span id="time">90</span><br />
 		This video: <span id="vidtime">15</span><br />
 		Score: <span id="score">0</span><br />
+		</strong>
+		</div>
 	</div>
 </div>
 <script>
@@ -118,6 +125,7 @@
 		$.post('/vidpop/submit_score/', {'score': score, 'correct': correct, 'videos_seen': videos_seen}, function(data){
 			alert("Score submitted");
 			$('#submit').attr("value", "Score submitted!");
+			$("#submit").prop('disabled', true);
 		});
 	});
 
@@ -130,9 +138,7 @@
 	var time = 90; //90 second timer for whole game
 	var current_video_time = 15; //15 second timer per video
 	var score = 0;
-	var correct = 0;
 	var incorrect = 0;
-
 	var playing = false;
 
 	var buttons = document.getElementById("buttons").children;
@@ -249,6 +255,7 @@
 		document.getElementById("start").style.display = 'none';
 		document.getElementById("end").style.display = 'none';
 		document.getElementById("buttons").style.display = 'block';
+		document.body.style.background = "#222222";
 	}
 
 	function endGame(){
@@ -259,6 +266,7 @@
 		document.getElementById("finalScore").innerHTML = score;
 		document.getElementById("buttons").style.display = 'none';
 		document.getElementById("end").style.display = 'block';
+		document.body.style.background = '#F8F8F8 url("/static/images/bg-white.jpg")';
 	}
 
 	function reload(){
