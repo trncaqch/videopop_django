@@ -137,6 +137,7 @@
 	var wrong = {{ wrong|safe }};
 	var videos_seen = 0;
 	var correct = 0;
+	var correct_id;
 	var timer;
 	var time = 90; //90 second timer for whole game
 	var current_video_time = 15; //15 second timer per video
@@ -216,7 +217,7 @@
 	//Handles scoring
 	function answerButton(id){
 		//Scoring
-		if (id == correct){ //Correct Answer
+		if (id == correct_id){ //Correct Answer
 			score += current_video_time; //Points award equal to remaining length of video, time unaffected
 			correct += 1;
 		} else{ //Wrong answer
@@ -236,11 +237,11 @@
 	//Gets the next video from the list, loads it at a random start point and populates the answer buttons.
 	function nextVideo(){
 		var start = 30 + Math.floor(Math.random() * 60) //Start between 30 and 90 seconds into the video
-		correct = Math.floor(Math.random() * 4) //Correct button is randomly selected
+		correct_id = Math.floor(Math.random() * 4) //Correct button is randomly selected
 
 
 		for(var i = 0; i < buttons.length; i++){
-			if(i == correct){
+			if(i == correct_id){
 				buttons[i].innerHTML = videos[videos_seen]["title"];
 			} else{
 				buttons[i].innerHTML = wrong[Math.floor(Math.random() * wrong.length)];
