@@ -3,14 +3,6 @@ import datetime
 from django.db import models
 from django.contrib.auth.models import User
 
-
-class UserProfile(models.Model):
-    user = models.OneToOneField(User)
-    score = models.IntegerField(max_length=128)
-
-    def __unicode__(self):
-        return self.user.name
-
 class Video(models.Model):
     name = models.CharField(max_length=128)
     videoid = models.CharField(max_length=128)
