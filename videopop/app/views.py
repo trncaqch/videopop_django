@@ -80,7 +80,7 @@ def play(request):
 
     return render(request, 'app/play.html', {'playlist' : playlist, 'wrong' : wrong})
 
-@csrf_exempt
+@login_required
 def submit_score(request):
     if request.method == 'POST':
         u = User.objects.get(username=request.user)
@@ -92,7 +92,6 @@ def submit_score(request):
 
     return HttpResponse("Score saved!")
 
-@csrf_exempt
 def report(request):
     if request.method =='POST':
         v = Video.objects.get(videoid=request.POST.get('id'))
@@ -119,7 +118,7 @@ def user_login(request):
                 return HttpResponse("Your account is disabled.")
         else:
             # Bad login details were provided.
-            return HttpResponseRedirect('/vidpop/')
+            return HttpResponseRedirect('/vidpop/login')
 
     # The request is not a HTTP POST, so display the login form.
     # This scenario would most likely be a HTTP GET.

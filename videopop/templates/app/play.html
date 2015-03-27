@@ -143,14 +143,14 @@
 	});
 
 	$('#submit').click(function(){
-		$.post('/vidpop/submit_score/', {'score': score, 'correct': correct, 'videos_seen': videos_seen}, function(data){
+		$.post('/vidpop/submit_score/', {'score': score, 'correct': correct, 'videos_seen': videos_seen, csrfmiddlewaretoken: '{{ csrf_token }}'}, function(data){
 			$('#submit').attr("value", "Score submitted!");
 			$("#submit").prop('disabled', true);
 		});
 	});
 
 	$('#report').click(function(){
-		$.post('/vidpop/report/', {'id' : videos[videos_seen - 1]['id']}, function(data){
+		$.post('/vidpop/report/', {'id' : videos[videos_seen - 1]['id'], csrfmiddlewaretoken: '{{ csrf_token }}'}, function(data){
 			$('#report').attr("value", "Video reported!");
 			$("#submit").prop('disabled', true);
 			videoReported();
@@ -319,7 +319,7 @@
 		document.getElementById("finalScore").innerHTML = score;
 		document.getElementById("buttons").style.display = 'none';
 		document.getElementById("end").style.display = 'block';
-		document.body.style.background = '#F8F8F8 url("/static/images/bg-white.jpg")';
+		document.body.style.background = '#F8F8F8';
 	}
 
 	function reload(){
