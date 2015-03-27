@@ -150,7 +150,7 @@
 	});
 
 	$('#report').click(function(){
-		$.post('/vidpop/report/', {'id' : videos[videos_seen]['id']}, function(data){
+		$.post('/vidpop/report/', {'id' : videos[videos_seen - 1]['id']}, function(data){
 			$('#report').attr("value", "Video reported!");
 			$("#submit").prop('disabled', true);
 			videoReported();

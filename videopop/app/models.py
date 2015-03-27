@@ -14,6 +14,7 @@ class UserProfile(models.Model):
 class Video(models.Model):
     name = models.CharField(max_length=128)
     videoid = models.CharField(max_length=128)
+    reports = models.IntegerField(max_length=128, default = 0)
 
 
 class Game(models.Model):

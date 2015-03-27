@@ -6,11 +6,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout, authenticate, login, logout
 from app.forms import UserForm, UserProfileForm
 from django.contrib.auth.decorators import login_required
-from models import Score
+from models import Score, Video
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
-
-from models import Video
 
 def index(request):
     if request.user.is_authenticated():
@@ -97,7 +95,10 @@ def submit_score(request):
 @csrf_exempt
 def report(request):
     if request.method =='POST':
-        print "Request recieved yo"
+        v = Video.objects.get(videoid=request.POST.get('id'))
+        print v.name
+        v.reports += 1
+        v.save()
 
     return HttpResponse("Video reported!")
 
