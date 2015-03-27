@@ -1,6 +1,5 @@
 import random
 import simplejson as json
-
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout, authenticate, login, logout
@@ -58,7 +57,7 @@ def register(request):
 
     # Render the template depending on the context.
     return render(request,
-            'app/register.html',
+            'registration/register.html',
             {'user_form': user_form, 'profile_form': profile_form, 'registered': registered} )
 
 
@@ -92,6 +91,7 @@ def submit_score(request):
 
     return HttpResponse("Score saved!")
 
+@login_required
 def report(request):
     if request.method =='POST':
         v = Video.objects.get(videoid=request.POST.get('id'))

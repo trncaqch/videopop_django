@@ -138,14 +138,14 @@
 </div>
 <script>
 	//AJAX
-	$(document).ready(function(){
-		$('#submit').prop('disabled', false);
-	});
+	//$(document).ready(function(){
+	//	$('#submit').prop('disabled', false);
+	//});
 
 	$('#submit').click(function(){
 		$.post('/vidpop/submit_score/', {'score': score, 'correct': correct, 'videos_seen': videos_seen, csrfmiddlewaretoken: '{{ csrf_token }}'}, function(data){
 			$('#submit').attr("value", "Score submitted!");
-			$("#submit").prop('disabled', true);
+			//$("#submit").prop('disabled', true);
 		});
 	});
 

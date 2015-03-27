@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from app import views, gameViews, scoreViews, resultViews, userViews, add_videosviews
+from app import views, scoreViews, resultViews, userViews, add_videosviews
 from django.conf import settings
 from django.conf.urls.static import static
 
