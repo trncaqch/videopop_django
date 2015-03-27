@@ -3,7 +3,7 @@ import simplejson as json
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout, authenticate, login, logout
-from app.forms import UserForm, UserProfileForm
+from app.forms import UserForm
 from django.contrib.auth.decorators import login_required
 from models import Score, Video
 from django.views.decorators.csrf import csrf_exempt
