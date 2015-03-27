@@ -84,7 +84,6 @@ def play(request):
 
 @csrf_exempt
 def submit_score(request):
-
     if request.method == 'POST':
         u = User.objects.get(username=request.user)
         score = Score.objects.create(user=u)
@@ -94,6 +93,13 @@ def submit_score(request):
         score.save()
 
     return HttpResponse("Score saved!")
+
+@csrf_exempt
+def report(request):
+    if request.method =='POST':
+        print "Request recieved yo"
+
+    return HttpResponse("Video reported!")
 
 def user_login(request):
     if request.method == 'POST':

@@ -33,6 +33,7 @@
 	#game{
 		position: relative;
 		width: 1000px;
+		margin: 0 auto;
 	}
 
 	#controls{
@@ -50,13 +51,10 @@
 
 	.overlay{
 		position: absolute;
-		background-color: #FFF;
 		width: 1000px;
 		height: 486px;
 		z-index: 1;
 		text-align: center;
-		background-color: #000;
-		color: #FFF;
 	}
 
 	.overlayContent{
@@ -66,8 +64,17 @@
    		transform: translate(-50%, -50%);
 	}
 
-	#end{
+	#start, #end{
+		background-color: #FFF;
+	}
+
+	#end, #announce{
 		display: none;
+	}
+
+	#announceContent{
+		font-size: 50px;
+		background-color: rgba(255,255,255,0.5);
 	}
 </style>
 
@@ -103,7 +110,12 @@
 			
 			<input type="button" value="Play again?" id="restart" class="btn-default" onclick="reload()" />
 			{% if user.is_authenticated %}<input type="button" value='Submit Score' id="submit" class="btn-default" /> 
-			{% else %} <br> You have to be logged in to submit your score {% endif %}
+			{% else %} <br> You must be logged in to submit your score {% endif %}
+		</div>
+	</div>
+	<div class="overlay" id="announce">
+		<div class="overlayContent">
+			<span id="announceContent"></span>
 		</div>
 	</div>
 	<div id="player"></div>
@@ -120,15 +132,28 @@
 		This video: <span id="vidtime">15</span><br />
 		Score: <span id="score">0</span><br />
 		</strong>
+		<input id="report" type="button" value="Report video" class="btn-default" /> 
 	</div>
 	</div>
 </div>
 <script>
 	//AJAX
+	$(document).ready(function(){
+		$('#submit').prop('disabled', false);
+	});
+
 	$('#submit').click(function(){
 		$.post('/vidpop/submit_score/', {'score': score, 'correct': correct, 'videos_seen': videos_seen}, function(data){
 			$('#submit').attr("value", "Score submitted!");
 			$("#submit").prop('disabled', true);
+		});
+	});
+
+	$('#report').click(function(){
+		$.post('/vidpop/report/', {'id' : videos[videos_seen]['id']}, function(data){
+			$('#report').attr("value", "Video reported!");
+			$("#submit").prop('disabled', true);
+			videoReported();
 		});
 	});
 
@@ -214,24 +239,38 @@
 		}
 	}
 
+	//Announces content to the player
+	function announce(content){
+		document.getElementById("announceContent").innerHTML = content;                             //Set announce string
+		document.getElementById("announce").style.display = 'block';                                //Display it to the player
+		setTimeout(function(){document.getElementById("announce").style.display = 'none';}, 1000);  //Hide again after 1s
+	}
+
 	//Handles scoring
 	function answerButton(id){
+		//Stop!
+		playing = false;
+		player.stopVideo();
+
 		//Scoring
 		if (id == correct_id){ //Correct Answer
+			announce(" Correct! ");
 			score += current_video_time; //Points award equal to remaining length of video, time unaffected
 			correct += 1;
 		} else{ //Wrong answer
+			announce(" Wrong. ");
 			time -= current_video_time; //Time penalty equal to remaining length of video, score unaffected
 			incorrect += 1;
 		}
 
-		//Update UI
-		document.getElementById("time").innerHTML = time;
-		document.getElementById("score").innerHTML = score;
-
-		//On to next video
-		player.stopVideo();
-		nextVideo();
+		//Continue if there's time left
+		if(time > 0){
+			document.getElementById("time").innerHTML = time;
+			document.getElementById("score").innerHTML = score;
+			nextVideo();
+		} else{
+			endGame();
+		}		
 	}
 
 	//Gets the next video from the list, loads it at a random start point and populates the answer buttons.
@@ -251,6 +290,16 @@
 		player.loadVideoById({'videoId' : videos[videos_seen]["id"], 'startSeconds' : start, 'endSeconds' : start + 15});
 		current_video_time = 15; //Reset video timer
 		videos_seen += 1;
+		document.getElementById("report").value = "Report video";
+		document.getElementById("vidtime").innerHTML = current_video_time;
+	}
+
+	//Resets the timer and advances to the next video
+	function videoReported(){
+		player.stopVideo();
+		time += 15 - current_video_time;
+		announce(" Reported. ");
+		nextVideo();
 	}
 
 	function startGame(){
