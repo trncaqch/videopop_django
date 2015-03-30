@@ -1,0 +1,81 @@
+{% extends 'app/base.html' %}
+
+{% load staticfiles %}
+
+{% block body_block %}
+		
+		<head>
+		<style>
+		#welcome {
+			font: italic bold 50px/50px Georgia, serif;
+			color: white;
+			background-color: #000;
+			background-color: rgba(0,0,0,0.7);
+			}
+		#playbutton {
+			display: block;
+			margin-left: 30%;
+			margin-right: 30%;
+			}
+		#scores {
+			font-size: 112.5%;
+			color: black;
+		}
+		
+		h1, h2, h3	{
+			color: black;
+			font-size: 250%;
+			}
+		
+		</style>
+		</head>
+
+		<div class = "section" id = "welcome">
+		Welcome to this very innovative and interactive game, called Videopop
+		</div>
+		
+		<div class = "images" id = "playbutton">
+		<a href= "/vidpop/play">
+		<img src = "{% static 'images/logo.png' %} "alt = " logo"/>
+		</a>
+		</div>
+	<div class="col-sm-3 col-md-2 sidebar">
+        {% block side_block %}
+			{% if user.is_authenticated %}
+				<br>
+				<h1> Top 5 results </h1>
+				<ol> 
+				<div id = "scores">
+					{% for score in top_scores %}
+						<li><strong>{{ score.score }}</strong> on {{score.date}} </li>
+					{% endfor %}
+				</div>
+				</ol>
+				<br>
+				
+				
+				<h2> Last 5 results</h2>
+				<div id = "scores">
+				<ol>
+					{% for score in last_scores %}
+						<li><strong>{{ score.score }}</strong> on {{score.date}} </li>
+					{% endfor %}
+				</ol>
+				</div>
+				
+			{% else %}
+				<h3> Top 10 results </h3>
+				<div id = "scores">
+				<ol>
+					{% for score in top_scores %}
+						<li><strong>{{ score.score }}</strong> by <strong> {{score.user}}</strong></li>
+					{% endfor %}
+				</ol>
+				</div>
+			{% endif %}
+		{% endblock %}
+
+     </div>
+
+{% endblock %}
+
