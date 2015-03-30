@@ -7,7 +7,7 @@ To install it, please do the following:
 		pip install -r requirements.txt
 		
     Navigate to the root of the Django application and run the following commands in a terminal:
-        python manage.py makemigrations project_management
+        python manage.py syncdb
         python manage.py migrate
         python populate.py
 
