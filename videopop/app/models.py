@@ -8,16 +8,6 @@ class Video(models.Model):
     videoid = models.CharField(max_length=128)
     reports = models.IntegerField(max_length=128, default = 0)
 
-
-class Game(models.Model):
-    game_mode = models.CharField(max_length=128)
-    date = models.DateTimeField(auto_now_add=True)
-    url = models.ForeignKey(Video)
-
-    def __unicode__(self):
-        return self.game_mode
-
-
 class Score(models.Model):
     date = models.DateTimeField(default=datetime.datetime.now)
     user = models.ForeignKey(User)
