@@ -1,7 +1,7 @@
 To install it, please do the following:
 
     Clone this repository on your local machine by opening a terminal and running: 
-		git clone https://github.com/2087939a/group_project_django.git
+		git clone https://github.com/2087939a/videopop_django.git
 		
     Create a new virtual enviroment and run:
 		pip install -r requirements.txt
